@@ -28,6 +28,7 @@ namespace ExercicioApiEcommerce
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<ProdutoService>();
+            services.AddSingleton<ClienteService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

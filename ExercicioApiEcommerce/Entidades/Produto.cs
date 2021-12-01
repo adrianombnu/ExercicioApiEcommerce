@@ -4,7 +4,7 @@ namespace ExercicioApiEcommerce.Entidades
 {
     public class Produto :EntidadeBase
     {
-        public Produto(Guid id, string nome, string descricao, decimal preco) : base(id)
+        public Produto(string nome, string descricao, decimal preco) 
         {
             Nome = nome;
             Descricao = descricao;

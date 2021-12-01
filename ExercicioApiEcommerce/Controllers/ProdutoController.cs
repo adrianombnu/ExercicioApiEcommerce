@@ -24,7 +24,7 @@ namespace ExercicioApiEcommerce.Controllers
                 return BadRequest("Produto informado inválido!");
 
             var gui = Guid.NewGuid();
-            var prod = new Produto(id: gui, nome: produtoDTO.Nome,descricao:produtoDTO.Descricao, preco: produtoDTO.Preco);
+            var prod = new Produto(nome: produtoDTO.Nome,descricao:produtoDTO.Descricao, preco: produtoDTO.Preco);
 
             return Created("",_produtoService.Cadastrar(prod));
         }
@@ -45,20 +45,16 @@ namespace ExercicioApiEcommerce.Controllers
         }
  
         [HttpPut, Route("{id}")]
-        public IActionResult Atualizar(Guid id, Produto produto)
+        public IActionResult Atualizar(Guid id, ProdutoDTO produtoDTO)
         {
-            try
-            {
-                _produtoService.Atualizar(id, produto);
+            produtoDTO.Validar();
 
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
+            if (!produtoDTO.Valido)
+                return BadRequest("Produto informado inválido!");
 
-            }
+            var prod = new Produto( nome: produtoDTO.Nome, descricao: produtoDTO.Descricao, preco: produtoDTO.Preco);
 
-            return Created("Produto alterado com sucesso!", produto);
+            return Created("Produto alterado com sucesso!", _produtoService.Atualizar(id, prod));
 
         }
 
@@ -79,7 +75,6 @@ namespace ExercicioApiEcommerce.Controllers
             return Ok("Produto deletado com sucesso.");
 
         }
-
 
     }
 }
