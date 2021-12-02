@@ -14,7 +14,9 @@ namespace ExercicioApiEcommerce.DTOs
             if (Quantidade <= 0)
                 Valido = false;
 
-            //Produto.Validar();
+            Produto?.Validar();
+            if (Produto?.Valido == false)
+                Valido = false;
 
 
         }

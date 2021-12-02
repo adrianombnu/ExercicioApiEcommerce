@@ -6,7 +6,7 @@ namespace ExercicioApiEcommerce.Entidades
 {
     public class Cliente : EntidadeBase
     {
-        public Cliente(string nome, string sobrenome, string documento, int idade, ETipoPessoa tipoPessoa)
+        public Cliente(string nome, string sobrenome, string documento, int idade, ETipoPessoa tipoPessoa) : base(Guid.NewGuid())
         {
             Nome = nome;
             Sobrenome = sobrenome;

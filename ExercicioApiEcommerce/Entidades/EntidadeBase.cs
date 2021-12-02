@@ -4,9 +4,9 @@ namespace ExercicioApiEcommerce.Entidades
 {
     public abstract class EntidadeBase
     {
-        protected EntidadeBase()
+        protected EntidadeBase(Guid id)
         {
-            Id = Guid.NewGuid();
+            Id = id;
         }
             
         public Guid Id { get; private set; }

@@ -4,7 +4,7 @@ namespace ExercicioApiEcommerce.Entidades
 {
     public class ItemPedido : EntidadeBase
     {
-        public ItemPedido(int quantidade)
+        public ItemPedido(int quantidade, Guid id) : base(id)
         {
             Quantidade = quantidade;
             

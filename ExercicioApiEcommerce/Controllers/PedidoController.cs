@@ -19,22 +19,6 @@ namespace ExercicioApiEcommerce.Controllers
             _itensPedidoService = itemPedidoService;
         }
 
-        /*
-        [HttpPost]
-        public IActionResult Cadastrar(PedidoDTO pedidoDTO)
-        {
-            pedidoDTO.Validar();
-
-            if (!pedidoDTO.Valido)
-                return BadRequest("Pedido inválido!");
-
-            var gui = Guid.NewGuid();
-            
-            var ped = new Pedido(dataPedido: pedidoDTO.DataPedido, tipoPagamento: pedidoDTO.TipoPagamento, cliente: pedidoDTO.Clientes);
-            
-            return Created("", _pedidoService.Cadastrar(ped));
-        }*/
-
         [HttpPost, Route("{id}/item")]
         public IActionResult AdiocionarItemPedido(Guid id, ItemPedidoDTO itemPedidoDTO)
         {
@@ -43,15 +27,16 @@ namespace ExercicioApiEcommerce.Controllers
             if (!itemPedidoDTO.Valido)
                 return BadRequest("Item inválido!");
 
-            var item = new ItemPedido(itemPedidoDTO.Quantidade);
-            var prod = new Produto(nome: itemPedidoDTO.Produto.Nome, descricao: itemPedidoDTO.Produto.Descricao, preco: itemPedidoDTO.Produto.Preco);
+            var item = new ItemPedido(itemPedidoDTO.Quantidade,itemPedidoDTO.Produto.Id);
+            var prod = new Produto(id: itemPedidoDTO.Produto.Id, nome: itemPedidoDTO.Produto.Nome, descricao: itemPedidoDTO.Produto.Descricao, preco: itemPedidoDTO.Produto.Preco);
             
             item.Produto = prod;
+            
             _itensPedidoService.Cadastrar(item);
             return Created("", _pedidoService.AdicionarItemPedido(id, item));
         }
 
-        /*
+        
         [HttpPut, Route("{idPedido}/item/{idItem}")]
         public IActionResult AtualizarItemPedido(Guid idPedido, Guid idItem, ItemPedidoDTO itemPedidoDTO)
         {
@@ -60,12 +45,12 @@ namespace ExercicioApiEcommerce.Controllers
             if (!itemPedidoDTO.Valido)
                 return BadRequest("Item inválido!");
 
-            var item = new ItemPedido(itemPedidoDTO.Quantidade, itemPedidoDTO.Valor);
+            var item = new ItemPedido(itemPedidoDTO.Quantidade, idItem);
             
-            return Created("", _pedidoService.AtualizarItemPedido(id, idItem, item));
+            return Created("", _pedidoService.AtualizarItemPedido(idPedido, idItem, item));
         }
 
-        */
+        
 
         [HttpGet, Route("{id}")]
         public IActionResult Get(Guid id)
@@ -81,17 +66,6 @@ namespace ExercicioApiEcommerce.Controllers
 
         }
 
-        /*
-        [HttpDelete, Route("{id}")]
-        public IActionResult Delete(Guid id)
-        {
-            if (!_pedidoService.Delete(id))
-                return BadRequest("Não foi possível deletar o produto!");
-
-            return Ok("Cliente deletado com sucesso.");
-
-        }
-        */
 
     }
 }

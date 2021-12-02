@@ -19,7 +19,7 @@ namespace ExercicioApiEcommerce.Entidades
         public Cliente Clientes { get; private set; }
         public Pagamento? Pagamento { get; private set; }
         
-        public Pedido(Guid id, Cliente cliente) : base()
+        public Pedido(Guid id, Cliente cliente) : base(id)
         {
             _itensPedido ??= new List<ItemPedido>();            
             Clientes = cliente;
@@ -29,7 +29,7 @@ namespace ExercicioApiEcommerce.Entidades
         public void AdicionarItemPedido(ItemPedido itemPedido)
         {
             if (_itensPedido.Any(i => i.Produto.Id == itemPedido.Produto.Id))
-                throw new Exception('Produto já incluido, favor atualizar a quantidade!');
+                throw new Exception("Produto já incluido, favor atualizar a quantidade!");
 
             _itensPedido.Add(itemPedido);
                                     
