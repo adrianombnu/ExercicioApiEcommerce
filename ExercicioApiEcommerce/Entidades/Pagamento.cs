@@ -1,6 +1,12 @@
-﻿namespace ExercicioApiEcommerce.Entidades
+﻿using ExercicioApiEcommerce.Enumeradores;
+
+namespace ExercicioApiEcommerce.Entidades
 {
-    public class Pagamento
+    public abstract class Pagamento
     {
+        public bool Valido { get; set; }
+        public EFormaPagamento FormaPagamento { get; protected set; }
+
+        public abstract void Validar();
     }
 }

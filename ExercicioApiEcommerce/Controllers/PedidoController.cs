@@ -1,5 +1,6 @@
 ﻿using ExercicioApiEcommerce.DTOs;
 using ExercicioApiEcommerce.Entidades;
+using ExercicioApiEcommerce.Enumeradores;
 using ExercicioApiEcommerce.Servicos;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -36,7 +37,6 @@ namespace ExercicioApiEcommerce.Controllers
             return Created("", _pedidoService.AdicionarItemPedido(id, item));
         }
 
-        
         [HttpPut, Route("{idPedido}/item/{idItem}")]
         public IActionResult AtualizarItemPedido(Guid idPedido, Guid idItem, ItemPedidoDTO itemPedidoDTO)
         {
@@ -50,7 +50,49 @@ namespace ExercicioApiEcommerce.Controllers
             return Created("", _pedidoService.AtualizarItemPedido(idPedido, idItem, item));
         }
 
-        
+        [HttpPost, Route("{idPedido}/pagamento/")]
+        public IActionResult FinalizarPedido(Guid idPedido, PagamentoDTO pagamentoDTO)
+        {
+            pagamentoDTO.Validar();
+
+            if (!pagamentoDTO.Valido)
+                return BadRequest("Pagamento inválido!");
+
+            if(pagamentoDTO.FormaPagamento == EFormaPagamento.Boleto)
+            {
+                var formaPagamento = new Boleto(DateTime.Now, pagamentoDTO.PagamentoBoleto.Valor);
+                return Created("", _pedidoService.FinalizarPedido(idPedido, formaPagamento));
+
+            }else if (pagamentoDTO.FormaPagamento == EFormaPagamento.CartaoCredito)
+            {
+                var formaPagamento = new Boleto(DateTime.Now, pagamentoDTO.PagamentoBoleto.Valor);
+                return Created("", _pedidoService.FinalizarPedido(idPedido, formaPagamento));
+
+            }else if (pagamentoDTO.FormaPagamento == EFormaPagamento.CartaoDebito)
+            {
+                var formaPagamento = new Boleto(DateTime.Now, pagamentoDTO.PagamentoBoleto.Valor);
+                return Created("", _pedidoService.FinalizarPedido(idPedido, formaPagamento));
+
+            }else if (pagamentoDTO.FormaPagamento == EFormaPagamento.Pix)
+            {
+                var formaPagamento = new Boleto(DateTime.Now, pagamentoDTO.PagamentoBoleto.Valor);
+                return Created("", _pedidoService.FinalizarPedido(idPedido, formaPagamento));
+            }
+            else
+            {
+                return BadRequest("Pagamento inválido!");
+            }
+            
+
+        }
+
+        [HttpDelete, Route("{idPedido}/item/{idItem}")]
+        public IActionResult RemoverItemPedido(Guid idPedido, Guid idItem)
+        {
+            return Created("", _pedidoService.RemoverItemPedido(idPedido, idItem));
+        }
+
+
 
         [HttpGet, Route("{id}")]
         public IActionResult Get(Guid id)

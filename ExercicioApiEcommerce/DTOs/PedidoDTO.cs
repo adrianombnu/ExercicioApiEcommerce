@@ -11,7 +11,7 @@ namespace ExercicioApiEcommerce.DTOs
         public DateTime DataPedido { get;  set; }
         public decimal ValorPedido { get;  set; }
         public DateTime DataPagamento { get;  set; }
-        public ETipoPagamento TipoPagamento { get;  set; }
+        public EFormaPagamento FormaPagamento { get;  set; }
         public List<ItemPedidoDTO> ItensPedido { get; set; }
         public ClienteDTO Clientes { get;  set; }
 

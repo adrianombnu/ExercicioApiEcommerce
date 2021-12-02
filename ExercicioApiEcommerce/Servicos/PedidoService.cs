@@ -46,6 +46,38 @@ namespace ExercicioApiEcommerce.Servicos
             return ped;
 
         }
+
+        public Pedido FinalizarPedido(Guid id, Pagamento pagamento)
+        {
+            var ped = _pedidos.SingleOrDefault(u => u.Id == id);
+
+            if (ped is null)
+                throw new Exception("Pedido não encontrado!");
+
+            ped.FinalizarPagamento(pagamento);
+
+            return ped;
+
+        }
+
+        public Pedido RemoverItemPedido(Guid id, Guid idItem)
+        {
+            var ped = _pedidos.SingleOrDefault(u => u.Id == id);
+
+            if (ped is null)
+                throw new Exception("Pedido não encontrado!");
+
+            var item = ped.ItemPedido.SingleOrDefault(u => u.Id == idItem);
+
+            if (item is null)
+                throw new Exception("Item não encontrado!");
+
+            ped.RemoverItemPedido(idItem);
+            ped.CalcularTotal();
+            return ped;
+
+        }
+
         public Pedido Get(Guid id) => _pedidos.Where(u => u.Id == id).SingleOrDefault();
         public IEnumerable<Pedido> Get() => _pedidos;
         
