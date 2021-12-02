@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,13 @@ namespace ExercicioApiEcommerce
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Este comando vai permitir, de forma global, que não fique num ciclo infinito ao serializar/deserializar um json
+            services.AddMvc()
+               .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+               .AddNewtonsoftJson(c => c.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
+            services.AddSingleton<ItemPedidoService>();
+            services.AddSingleton<PedidoService>();
             services.AddSingleton<ProdutoService>();
             services.AddSingleton<ClienteService>();
             services.AddControllers();

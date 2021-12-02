@@ -1,6 +1,55 @@
-﻿namespace ExercicioApiEcommerce.Entidades
+﻿using ExercicioApiEcommerce.DTOs;
+using ExercicioApiEcommerce.Enumeradores;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+#nullable enable
+namespace ExercicioApiEcommerce.Entidades
 {
-    public class Pedido
+    public class Pedido : EntidadeBase
     {
+        private List<ItemPedido> _itensPedido;
+        
+        public DateTime DataPedido { get; private set; }
+        public decimal ValorPedido { get; private set; }
+        public DateTime DataPagamento { get; private set; }
+        public ETipoPagamento TipoPagamento { get; private set; }        
+        public IReadOnlyList<ItemPedido> ItemPedido => _itensPedido;
+        public Cliente Clientes { get; private set; }
+        public Pagamento? Pagamento { get; private set; }
+        
+        public Pedido(Guid id, Cliente cliente) : base()
+        {
+            _itensPedido ??= new List<ItemPedido>();            
+            Clientes = cliente;
+
+        }
+
+        public void AdicionarItemPedido(ItemPedido itemPedido)
+        {
+            if (_itensPedido.Any(i => i.Produto.Id == itemPedido.Produto.Id))
+                throw new Exception('Produto já incluido, favor atualizar a quantidade!');
+
+            _itensPedido.Add(itemPedido);
+                                    
+        }
+        public void AtualizarItemPedido(Guid idItem, ItemPedido itemPedido)
+        {
+            _itensPedido.Where(w => w.Id == idItem).ToList().ForEach(f => f.Quantidade = itemPedido.Quantidade);
+            
+        }
+
+        public void CalcularTotal()
+        {
+            decimal valorTotal = 0;
+
+            foreach(var c in _itensPedido) valorTotal += (c.Produto.Preco * c.Quantidade);
+
+            this.ValorPedido = valorTotal;
+
+        }
+
+
     }
 }

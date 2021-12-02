@@ -10,6 +10,7 @@ namespace ExercicioApiEcommerce.Controllers
     public class ClienteController : ControllerBase
     {
         private readonly ClienteService _clienteService;
+
         public ClienteController(ClienteService clienteService)
         {
             _clienteService = clienteService;
@@ -50,7 +51,7 @@ namespace ExercicioApiEcommerce.Controllers
             clienteDTO.Validar();
 
             if (!clienteDTO.Valido)
-                return BadRequest("Produto informado inválido!");
+                return BadRequest("Cliente informado inválido!");
 
             var prod = new Cliente(nome: clienteDTO.Nome, sobrenome: clienteDTO.Sobrenome, documento: clienteDTO.Documento, idade: clienteDTO.Idade, tipoPessoa: clienteDTO.TipoPessoa);
 

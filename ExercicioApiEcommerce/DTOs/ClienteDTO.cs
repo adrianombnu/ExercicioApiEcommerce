@@ -1,5 +1,5 @@
 ﻿using ExercicioApiEcommerce.Enumeradores;
-
+#nullable enable
 namespace ExercicioApiEcommerce.DTOs
 {
     public class ClienteDTO : Validator

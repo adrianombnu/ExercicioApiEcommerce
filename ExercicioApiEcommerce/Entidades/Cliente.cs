@@ -1,5 +1,7 @@
 ﻿using ExercicioApiEcommerce.Enumeradores;
+using System;
 
+#nullable enable
 namespace ExercicioApiEcommerce.Entidades
 {
     public class Cliente : EntidadeBase
@@ -10,7 +12,7 @@ namespace ExercicioApiEcommerce.Entidades
             Sobrenome = sobrenome;
             Documento = documento;
             Idade = idade;
-            TipoPessoa = TipoPessoa;
+            TipoPessoa = tipoPessoa;
 
             CriarPedido();
 
@@ -34,7 +36,7 @@ namespace ExercicioApiEcommerce.Entidades
 
         public void CriarPedido()
         {
-            Pedido ??= new Pedido();
+            Pedido ??= new Pedido(Guid.NewGuid(), this);
         }
 
 

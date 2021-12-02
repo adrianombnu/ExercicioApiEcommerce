@@ -8,9 +8,11 @@ namespace ExercicioApiEcommerce.Servicos
     public class ClienteService
     {
         private readonly List<Cliente> _clientes;
-        public ClienteService()
+        private readonly PedidoService _pedidoService;
+        public ClienteService(PedidoService pedidoService)
         {
             _clientes ??= new List<Cliente>();
+            _pedidoService ??= pedidoService;
         }
 
         public IEnumerable<Cliente> Get() => _clientes;
@@ -20,6 +22,7 @@ namespace ExercicioApiEcommerce.Servicos
         public Cliente Cadastrar(Cliente cliente)
         {
             _clientes.Add(cliente);
+            _pedidoService.Cadastrar(cliente.Pedido);
             return cliente;
         }
 
