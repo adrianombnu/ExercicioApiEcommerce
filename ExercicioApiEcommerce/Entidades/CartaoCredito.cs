@@ -43,11 +43,7 @@ namespace ExercicioApiEcommerce.Entidades
             }
 
             //Valida limite
-            if (1 != 1)
-            {
-                Valido = false;
-                throw new Exception("Limite insuficiente.");
-            }
+            
         }
     }
 }

@@ -42,6 +42,9 @@ namespace ExercicioApiEcommerce.Entidades
                 Valido = false;
                 throw new Exception("Numero do cartão inválido.");
             }
+
+            //Valida limite
+            
         }
     }
 }
