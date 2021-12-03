@@ -17,7 +17,16 @@ namespace ExercicioApiEcommerce.Servicos
 
         public IEnumerable<Cliente> Get() => _clientes;
 
-        public Cliente Get(Guid id) => _clientes.Where(u => u.Id == id).SingleOrDefault();
+        public Cliente Get(Guid id)
+        {
+            var cli = _clientes.Where(u => u.Id == id).SingleOrDefault();
+
+            if(cli == null)
+                throw new Exception("Cliente não encontrado!");
+
+            return cli;
+
+        }
 
         public Cliente Cadastrar(Cliente cliente)
         {
