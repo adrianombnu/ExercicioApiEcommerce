@@ -61,29 +61,51 @@ namespace ExercicioApiEcommerce.Controllers
             if(pagamentoDTO.FormaPagamento == EFormaPagamento.Boleto)
             {
                 var formaPagamento = new Boleto(DateTime.Now, pagamentoDTO.PagamentoBoleto.Valor);
+
                 return Created("", _pedidoService.FinalizarPedido(idPedido, formaPagamento));
 
             }else if (pagamentoDTO.FormaPagamento == EFormaPagamento.CartaoCredito)
             {
-                var formaPagamento = new Boleto(DateTime.Now, pagamentoDTO.PagamentoBoleto.Valor);
+                var formaPagamento = new CartaoDebito(pagamentoDTO.PagamentoCartaoCredito.NomeDoCartao,
+                                                      pagamentoDTO.PagamentoCartaoCredito.NumeroCartao,
+                                                      pagamentoDTO.PagamentoCartaoCredito.CodigoCvc,
+                                                      pagamentoDTO.PagamentoCartaoCredito.Valor);
+
                 return Created("", _pedidoService.FinalizarPedido(idPedido, formaPagamento));
 
             }else if (pagamentoDTO.FormaPagamento == EFormaPagamento.CartaoDebito)
             {
-                var formaPagamento = new Boleto(DateTime.Now, pagamentoDTO.PagamentoBoleto.Valor);
+                var formaPagamento = new CartaoDebito(pagamentoDTO.PagamentoCartaoDebito.NomeDoCartao,
+                                                      pagamentoDTO.PagamentoCartaoDebito.NumeroCartao,
+                                                      pagamentoDTO.PagamentoCartaoDebito.CodigoCvc,
+                                                      pagamentoDTO.PagamentoCartaoDebito.Valor);
+
                 return Created("", _pedidoService.FinalizarPedido(idPedido, formaPagamento));
 
             }else if (pagamentoDTO.FormaPagamento == EFormaPagamento.Pix)
             {
-                var formaPagamento = new Boleto(DateTime.Now, pagamentoDTO.PagamentoBoleto.Valor);
-                return Created("", _pedidoService.FinalizarPedido(idPedido, formaPagamento));
+                if (pagamentoDTO.PagamentoPix.ChavePix != null)
+                {
+                    var formaPagamento = new Pix(pagamentoDTO.PagamentoPix.ChavePix, pagamentoDTO.PagamentoPix.Valor);
+
+                    return Created("", _pedidoService.FinalizarPedido(idPedido, formaPagamento));
+                }
+                else
+                {
+                    var formaPagamento = new Pix(pagamentoDTO.PagamentoPix.CodigoBanco,
+                                                 pagamentoDTO.PagamentoPix.CodigoAgencia,
+                                                 pagamentoDTO.PagamentoPix.NumeroConta,
+                                                 pagamentoDTO.PagamentoPix.Valor);
+
+                    return Created("", _pedidoService.FinalizarPedido(idPedido, formaPagamento));
+                }
+                                 
             }
             else
             {
-                return BadRequest("Pagamento inválido!");
+                return BadRequest("Tipo de pagamento inválido!");
             }
             
-
         }
 
         [HttpDelete, Route("{idPedido}/item/{idItem}")]

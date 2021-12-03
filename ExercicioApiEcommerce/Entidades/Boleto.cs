@@ -13,6 +13,7 @@ namespace ExercicioApiEcommerce.Entidades
             DataVencimento = dataVencimento;
             Valor = valor;
             FormaPagamento = EFormaPagamento.Boleto;
+
             Validar();
         }
 

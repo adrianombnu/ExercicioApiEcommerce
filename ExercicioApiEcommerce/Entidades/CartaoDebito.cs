@@ -1,22 +1,23 @@
 ﻿using ExercicioApiEcommerce.Enumeradores;
 using System;
 
-namespace ExercicioApiEcommerce.DTOs
+namespace ExercicioApiEcommerce.Entidades
 {
-    public class PagamentoCartoDebitoDTO : Validator
+    public class CartaoDebito : Pagamento
     {
-        public string NomeDoCartao { get; set; }
-        public string NumeroCartao { get; set; }
-        public string CodigoCvc { get; set; }
-        public decimal Valor { get; set; }
+        public string NomeDoCartao { get; private set; }
+        public string NumeroCartao { get; private set; }
+        public string CodigoCvc { get; private set; }
+        public decimal Valor { get; private set; }
 
-        public PagamentoCartoDebitoDTO(string nomeDoCartao, string numeroCartao, string codigoCvc, decimal valor)
+        public CartaoDebito(string nomeDoCartao, string numeroCartao, string codigoCvc, decimal valor)
         {
             NomeDoCartao = nomeDoCartao;
             NumeroCartao = numeroCartao;
             CodigoCvc = codigoCvc;
             Valor = valor;
-            
+            FormaPagamento = EFormaPagamento.CartaoDebito;
+
             Validar();
         }
 
@@ -27,7 +28,7 @@ namespace ExercicioApiEcommerce.DTOs
             if (Valor <= 0)
             {
                 Valido = false;
-                throw new Exception ("Deve ser informado um valor.");
+                throw new Exception("Deve ser informado um valor.");
             }
 
             if (CodigoCvc.Length != 3)

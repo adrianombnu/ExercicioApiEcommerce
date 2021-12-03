@@ -2,11 +2,11 @@
 using ExercicioApiEcommerce.Enumeradores;
 using System;
 
+#nullable enable
 namespace ExercicioApiEcommerce.DTOs
 {
     public class PagamentoDTO : Validator
     {
-        public Guid IdPedido { get; set; }
         public EFormaPagamento FormaPagamento { get; set; }
         public PagamentoPixDTO? PagamentoPix { get; set; }
         public PagamentoBoletoDTO? PagamentoBoleto { get; set; }

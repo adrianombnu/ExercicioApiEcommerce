@@ -39,12 +39,7 @@ namespace ExercicioApiEcommerce.Entidades
             _itensPedido.Where(w => w.Id == idItem).ToList().ForEach(f => f.Quantidade = itemPedido.Quantidade);
             
         }
-        public void FinalizarPagamento(Pagamento pagamento)
-        {
-            Pagamento = pagamento;
-
-        }
-
+        
         public void RemoverItemPedido(Guid idItem)
         {
             _itensPedido.RemoveAll(x => x.Id == idItem);
@@ -61,7 +56,7 @@ namespace ExercicioApiEcommerce.Entidades
 
         }
 
-        public void FinalizarCompra(Pagamento pagamento)
+        public void FinalizarPedido(Pagamento pagamento)
         {
             if (pagamento.Valido)
             {

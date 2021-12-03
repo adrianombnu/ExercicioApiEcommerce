@@ -54,7 +54,7 @@ namespace ExercicioApiEcommerce.Servicos
             if (ped is null)
                 throw new Exception("Pedido não encontrado!");
 
-            ped.FinalizarPagamento(pagamento);
+            ped.FinalizarPedido(pagamento);
 
             return ped;
 
