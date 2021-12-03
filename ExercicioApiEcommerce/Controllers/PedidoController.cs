@@ -28,13 +28,21 @@ namespace ExercicioApiEcommerce.Controllers
             if (!itemPedidoDTO.Valido)
                 return BadRequest("Item inválido!");
 
-            var item = new ItemPedido(itemPedidoDTO.Quantidade,itemPedidoDTO.Produto.Id);
-            var prod = new Produto(id: itemPedidoDTO.Produto.Id, nome: itemPedidoDTO.Produto.Nome, descricao: itemPedidoDTO.Produto.Descricao, preco: itemPedidoDTO.Produto.Preco);
-            
-            item.Produto = prod;
-            
-            _itensPedidoService.Cadastrar(item);
-            return Created("", _pedidoService.AdicionarItemPedido(id, item));
+            try
+            {
+                var item = new ItemPedido(itemPedidoDTO.Quantidade, itemPedidoDTO.Produto.Id);
+                var prod = new Produto(id: itemPedidoDTO.Produto.Id, nome: itemPedidoDTO.Produto.Nome, descricao: itemPedidoDTO.Produto.Descricao, preco: itemPedidoDTO.Produto.Preco);
+
+                item.Produto = prod;
+
+                _itensPedidoService.Cadastrar(item);
+                return Created("", _pedidoService.AdicionarItemPedido(id, item));
+
+            }catch (Exception ex)
+            {
+                return BadRequest("Erro ao adicionar item no pedido: " + ex.Message);
+            }
+
         }
 
         [HttpPut, Route("{idPedido}/item/{idItem}")]
@@ -45,9 +53,17 @@ namespace ExercicioApiEcommerce.Controllers
             if (!itemPedidoDTO.Valido)
                 return BadRequest("Item inválido!");
 
-            var item = new ItemPedido(itemPedidoDTO.Quantidade, idItem);
-            
-            return Created("", _pedidoService.AtualizarItemPedido(idPedido, idItem, item));
+            try
+            {
+                var item = new ItemPedido(itemPedidoDTO.Quantidade, idItem);
+
+                return Created("", _pedidoService.AtualizarItemPedido(idPedido, idItem, item));
+
+            }catch (Exception ex)
+            {
+                return BadRequest("Erro ao atualizar item: " + ex.Message);
+            }
+
         }
 
         [HttpPost, Route("{idPedido}/pagamento/")]
@@ -119,7 +135,16 @@ namespace ExercicioApiEcommerce.Controllers
         [HttpDelete, Route("{idPedido}/item/{idItem}")]
         public IActionResult RemoverItemPedido(Guid idPedido, Guid idItem)
         {
-            return Created("", _pedidoService.RemoverItemPedido(idPedido, idItem));
+            try
+            {
+                return Created("", _pedidoService.RemoverItemPedido(idPedido, idItem));
+
+            }catch (Exception ex)
+            {
+                return BadRequest("Erro ao remover item do pedido: " + ex.Message);
+            }
+
+
         }
 
 
