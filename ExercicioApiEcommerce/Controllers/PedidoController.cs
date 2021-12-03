@@ -21,7 +21,7 @@ namespace ExercicioApiEcommerce.Controllers
         }
 
         [HttpPost, Route("{id}/item")]
-        public IActionResult AdiocionarItemPedido(Guid id, ItemPedidoDTO itemPedidoDTO)
+        public IActionResult AdicionarItemPedido(Guid id, ItemPedidoDTO itemPedidoDTO)
         {
             itemPedidoDTO.Validar();
 

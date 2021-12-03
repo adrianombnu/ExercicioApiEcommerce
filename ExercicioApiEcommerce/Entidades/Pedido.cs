@@ -61,6 +61,7 @@ namespace ExercicioApiEcommerce.Entidades
             if (pagamento.Valido)
             {
                 Pagamento = pagamento;                
+                //efetiva pagamento
             }
             else
             {
