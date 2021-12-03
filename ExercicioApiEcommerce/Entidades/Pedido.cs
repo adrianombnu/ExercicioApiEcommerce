@@ -60,7 +60,11 @@ namespace ExercicioApiEcommerce.Entidades
         {
             if (pagamento.Valido)
             {
-                Pagamento = pagamento;                
+                Pagamento = pagamento;
+                                
+                this.DataPagamento = DateTime.Now;
+                this.DataPedido = DateTime.Now;
+
                 //efetiva pagamento
             }
             else
