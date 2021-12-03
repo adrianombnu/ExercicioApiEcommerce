@@ -10,16 +10,6 @@ namespace ExercicioApiEcommerce.DTOs
         public string CodigoCvc { get; set; }
         public decimal Valor { get; set; }
 
-        public PagamentoCartoDebitoDTO(string nomeDoCartao, string numeroCartao, string codigoCvc, decimal valor)
-        {
-            NomeDoCartao = nomeDoCartao;
-            NumeroCartao = numeroCartao;
-            CodigoCvc = codigoCvc;
-            Valor = valor;
-            
-            Validar();
-        }
-
         public override void Validar()
         {
             Valido = true;

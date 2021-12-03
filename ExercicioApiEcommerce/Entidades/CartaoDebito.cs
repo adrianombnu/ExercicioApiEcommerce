@@ -8,7 +8,7 @@ namespace ExercicioApiEcommerce.Entidades
         public string NomeDoCartao { get; private set; }
         public string NumeroCartao { get; private set; }
         public string CodigoCvc { get; private set; }
-        public decimal Valor { get; private set; }
+        //public decimal Valor { get; private set; }
 
         public CartaoDebito(string nomeDoCartao, string numeroCartao, string codigoCvc, decimal valor)
         {

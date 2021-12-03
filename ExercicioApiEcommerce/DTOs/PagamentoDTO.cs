@@ -28,6 +28,11 @@ namespace ExercicioApiEcommerce.DTOs
                 PagamentoCartaoDebito is null &&
                 PagamentoCartaoCredito is null)
                 Valido = false;
+            
+            PagamentoPix?.Validar();
+            PagamentoBoleto?.Validar();
+            PagamentoCartaoDebito?.Validar();
+            PagamentoCartaoCredito?.Validar();
 
         }
 

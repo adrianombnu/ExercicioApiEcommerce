@@ -6,7 +6,7 @@ namespace ExercicioApiEcommerce.Entidades
     internal class Boleto : Pagamento
     {
         public DateTime DataVencimento { get; private set; }
-        public decimal Valor { get; private set; }
+        //public decimal Valor { get; private set; }
 
         public Boleto(DateTime dataVencimento, decimal valor)
         {
@@ -27,5 +27,6 @@ namespace ExercicioApiEcommerce.Entidades
                 throw new Exception("Deve ser informado um valor.");
             }
         }
+        
     }
 }

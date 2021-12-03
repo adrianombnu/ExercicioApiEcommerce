@@ -60,8 +60,7 @@ namespace ExercicioApiEcommerce.Entidades
         {
             if (pagamento.Valido)
             {
-                Pagamento = pagamento;
-                Console.WriteLine("Compra finalizada!!!");
+                Pagamento = pagamento;                
             }
             else
             {

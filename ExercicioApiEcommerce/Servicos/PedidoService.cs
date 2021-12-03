@@ -50,10 +50,12 @@ namespace ExercicioApiEcommerce.Servicos
         public Pedido FinalizarPedido(Guid id, Pagamento pagamento)
         {
             var ped = _pedidos.SingleOrDefault(u => u.Id == id);
-
+            
             if (ped is null)
                 throw new Exception("Pedido não encontrado!");
-
+            
+            if(ped.ValorPedido != pagamento.Valor) throw new Exception("Valor do pagamento inválido!");
+            
             ped.FinalizarPedido(pagamento);
 
             return ped;

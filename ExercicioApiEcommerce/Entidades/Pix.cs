@@ -9,7 +9,7 @@ namespace ExercicioApiEcommerce.Entidades
         public int CodigoBanco { get; private set; }
         public int CodigoAgencia { get; private set; }
         public int NumeroConta { get; private set; }
-        public decimal Valor { get; private set; }
+        //public decimal Valor { get; private set; }
 
         public Pix(string chavePix, decimal valor)
         {
