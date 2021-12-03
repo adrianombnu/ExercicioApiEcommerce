@@ -40,6 +40,9 @@ namespace ExercicioApiEcommerce.Entidades
                 Valido = false;
                 throw new Exception("Deve ser informado um valor.");
             }
+
+            //Vaida Chave Pix
+
         }
     }
 }
