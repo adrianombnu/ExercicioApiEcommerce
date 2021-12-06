@@ -11,7 +11,7 @@ namespace ExercicioApiEcommerce.Controllers
     [ApiController, Route("[controller]")]
     public class PedidoController : ControllerBase
     {
-        private readonly PedidoService _pedidoService;
+        private readonly PedidoService _pedidoService; 
         private readonly ItemPedidoService _itensPedidoService;
 
         public PedidoController(PedidoService pedidoService, ItemPedidoService itemPedidoService)
