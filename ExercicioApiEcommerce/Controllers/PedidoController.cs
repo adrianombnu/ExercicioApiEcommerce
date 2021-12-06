@@ -74,62 +74,67 @@ namespace ExercicioApiEcommerce.Controllers
             if (!pagamentoDTO.Valido)
                 return BadRequest("Pagamento inválido!");
 
-            switch (pagamentoDTO.FormaPagamento)
+            try
             {
-                case EFormaPagamento.Boleto:
-                    {
-                        var formaPagamento = new Boleto(DateTime.Now, pagamentoDTO.PagamentoBoleto.Valor);
-                        
-                        return Created("", _pedidoService.FinalizarPedido(idPedido, formaPagamento));
-
-                    }
-
-                case EFormaPagamento.CartaoCredito:
-                    {
-                        var formaPagamento = new CartaoDebito(pagamentoDTO.PagamentoCartaoCredito.NomeDoCartao,
-                                                              pagamentoDTO.PagamentoCartaoCredito.NumeroCartao,
-                                                              pagamentoDTO.PagamentoCartaoCredito.CodigoCvc,
-                                                              pagamentoDTO.PagamentoCartaoCredito.Valor);
-
-                        return Created("", _pedidoService.FinalizarPedido(idPedido, formaPagamento));
-
-                    }
-
-                case EFormaPagamento.CartaoDebito:
-                    {
-                        var formaPagamento = new CartaoDebito(pagamentoDTO.PagamentoCartaoDebito.NomeDoCartao,
-                                                              pagamentoDTO.PagamentoCartaoDebito.NumeroCartao,
-                                                              pagamentoDTO.PagamentoCartaoDebito.CodigoCvc,
-                                                              pagamentoDTO.PagamentoCartaoDebito.Valor);
-
-                        return Created("", _pedidoService.FinalizarPedido(idPedido, formaPagamento));
-
-                    }
-
-                case EFormaPagamento.Pix:
-                    {
-                        if (pagamentoDTO.PagamentoPix.ChavePix != null)
+                switch (pagamentoDTO.FormaPagamento)
+                {
+                    case EFormaPagamento.Boleto:
                         {
-                            var formaPagamento = new Pix(pagamentoDTO.PagamentoPix.ChavePix, pagamentoDTO.PagamentoPix.Valor);
+                            var formaPagamento = new Boleto(DateTime.Now, pagamentoDTO.PagamentoBoleto.Valor);
 
                             return Created("", _pedidoService.FinalizarPedido(idPedido, formaPagamento));
+
                         }
-                        else
+
+                    case EFormaPagamento.CartaoCredito:
                         {
-                            var formaPagamento = new Pix(pagamentoDTO.PagamentoPix.CodigoBanco,
-                                                         pagamentoDTO.PagamentoPix.CodigoAgencia,
-                                                         pagamentoDTO.PagamentoPix.NumeroConta,
-                                                         pagamentoDTO.PagamentoPix.Valor);
+                            var formaPagamento = new CartaoDebito(pagamentoDTO.PagamentoCartaoCredito.NomeDoCartao,
+                                                                  pagamentoDTO.PagamentoCartaoCredito.NumeroCartao,
+                                                                  pagamentoDTO.PagamentoCartaoCredito.CodigoCvc,
+                                                                  pagamentoDTO.PagamentoCartaoCredito.Valor);
 
                             return Created("", _pedidoService.FinalizarPedido(idPedido, formaPagamento));
+
                         }
 
-                    }
+                    case EFormaPagamento.CartaoDebito:
+                        {
+                            var formaPagamento = new CartaoDebito(pagamentoDTO.PagamentoCartaoDebito.NomeDoCartao,
+                                                                  pagamentoDTO.PagamentoCartaoDebito.NumeroCartao,
+                                                                  pagamentoDTO.PagamentoCartaoDebito.CodigoCvc,
+                                                                  pagamentoDTO.PagamentoCartaoDebito.Valor);
 
-                default:
-                    return BadRequest("Tipo de pagamento inválido!");
+                            return Created("", _pedidoService.FinalizarPedido(idPedido, formaPagamento));
+
+                        }
+
+                    case EFormaPagamento.Pix:
+                        {
+                            if (pagamentoDTO.PagamentoPix.ChavePix != null)
+                            {
+                                var formaPagamento = new Pix(pagamentoDTO.PagamentoPix.ChavePix, pagamentoDTO.PagamentoPix.Valor);
+
+                                return Created("", _pedidoService.FinalizarPedido(idPedido, formaPagamento));
+                            }
+                            else
+                            {
+                                var formaPagamento = new Pix(pagamentoDTO.PagamentoPix.CodigoBanco,
+                                                             pagamentoDTO.PagamentoPix.CodigoAgencia,
+                                                             pagamentoDTO.PagamentoPix.NumeroConta,
+                                                             pagamentoDTO.PagamentoPix.Valor);
+
+                                return Created("", _pedidoService.FinalizarPedido(idPedido, formaPagamento));
+                            }
+
+                        }
+
+                    default:
+                        return BadRequest("Tipo de pagamento inválido!");
+                }
+            }catch (Exception ex)
+            {
+                return BadRequest("Erro ao efetuar o pagamento: " + ex.Message);
             }
-
         }
 
         [HttpDelete, Route("{idPedido}/item/{idItem}")]
